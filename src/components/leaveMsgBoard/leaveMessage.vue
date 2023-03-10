@@ -5,16 +5,11 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'App',
-  components: {
-
-  }
+  name: "leaveMessage"
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

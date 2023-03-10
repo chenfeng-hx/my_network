@@ -1,20 +1,15 @@
 <template>
   <div>
-
+    <comment-item></comment-item>
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'App',
-  components: {
-
-  }
+  name: "commentItem"
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
