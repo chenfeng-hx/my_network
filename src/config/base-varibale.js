@@ -8,3 +8,11 @@
 /**
  * 该文件主要用于存放公共变量的名称，防止写错
  */
+
+// 项目监听的端口号
+const PORT = process.env.PORT || 9000
+
+
+module.exports = {
+	PORT,
+}
