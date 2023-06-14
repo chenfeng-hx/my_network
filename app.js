@@ -7,7 +7,8 @@ const express = require('express')
 
 // 引入跨域处理中间件
 const cors = require('cors')
-
+// 引入日志处理中间件
+const saveMorgan = require('./src/middleware/saveReqLogs')
 
 // 引入路由
 const userRouter = require('./src/router/user')
@@ -24,8 +25,8 @@ const errorHandler = require('./src/middleware/error-handler')
 // 创建应用实例
 const app = express();
 
-// 打印日志
-app.use(morgan('combined'))
+// 保存日志
+app.use(saveMorgan)
 // 处理跨域
 app.use(cors());
 
