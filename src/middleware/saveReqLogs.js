@@ -11,8 +11,6 @@
 
 // 引入日志处理中间件
 const morgan = require('morgan')
-// 可以使用 token 自定义日志的参数
-// const { token } = require("morgan");
 
 // 引入文件处理
 const fs = require('fs')
@@ -42,8 +40,14 @@ let preFilePath = path.join(__dirname, `../../public/requestLogs/${preFileName}`
 // 	if (err) return '文件创建失败'
 // })
 
+// 自定义部分格式
+morgan.token('reqBody', req => {
+	if (req.method === 'GET') return JSON.stringify(req.query);
+	return JSON.stringify(req.body);
+})
+
 // 打印的日志格式
-const format = ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms  - ":referrer" ":user-agent" - :total-time ms';
+const format = ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :reqBody --- :status :res[content-length] :response-time ms  - ":referrer" ":user-agent" - :total-time ms';
 
 // 日志写入文件(当文件不存在时会自动创建文件, 所以不需要 appendFile)
 const logStream = fs.createWriteStream(filePath, { flags: 'a' });
@@ -63,7 +67,7 @@ const upDateVariable = () => {
 		saveLogFile(preFilePath, preFileName, logFileType[0]).catch();
 		// 更新
 		filePath = path.join(__dirname, `../../public/requestLogs/${fileName}`)
-		preFilePath = fileName;
+		preFileName = fileName;
 		preFilePath = filePath;
 	}
 	// 保存当天的日志文件(这一步其实可以不用做, 可以始终只保存前一天的日志文件)
@@ -71,6 +75,6 @@ const upDateVariable = () => {
 }
 
 // 每隔一段时间去更新变量(每隔一分钟去更新, 这样做会导致有较少的当天的请求日志会记录在昨天)
-startTimer(upDateVariable, 1000 * 10)
+startTimer(upDateVariable, 1000 * 60 * 2)
 // 保存每天的日志文件(其实更好地做法是通过 fs.watch 监视文件内容的变化去保存, 可以保证每个文件的所有内容都被保存到)
 // startTimer(saveLogFile, 1000 * 60 * 60 * 12, filePath, fileName, logFileType[0])

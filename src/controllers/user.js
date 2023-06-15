@@ -9,7 +9,27 @@
  * 该文件用于对用户身份验证的处理
  */
 
+const { validationResult } = require('express-validator')
+
 // 用户登录
 exports.userLoginHandler = (req, res, next) => {
-	res.send('hello')
+	try {
+		const result = validationResult(req);
+		if (result.isEmpty()) res.send('he');
+	} catch (err) {
+		res.send({ errors: result.array() })
+	}
+}
+
+
+// 用户注册
+exports.userRegisterHandler = (req, res, next) => {
+	try {
+		const result = validationResult(req);
+		if (!result.isEmpty()) {
+			return res.status(401).json({ errors: result.array() })
+		}
+	} catch (err) {
+		next(err);
+	}
 }

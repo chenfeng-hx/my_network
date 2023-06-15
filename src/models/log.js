@@ -15,7 +15,7 @@ const { commonPrototypeSchema } = require('./base-model')
 const mongoose = require("mongoose");
 
 const logSchema = new Schema({
-	// // 日志的标题
+	// 日志的标题
 	fileName:{
 		type: String,
 		require: true,
@@ -23,9 +23,9 @@ const logSchema = new Schema({
 		unique: true,    // 唯一的值
 		trim: true,      // 调用trim()
 	},
-	// // 日志的内容
+	// 日志的内容
 	fileContent: Buffer,
-	// // 日志的类型 ( HttpReq / dbCRUD )
+	// 日志的类型 ( HttpReq / dbCRUD )
 	fileType: {
 		type: String,
 		require: true

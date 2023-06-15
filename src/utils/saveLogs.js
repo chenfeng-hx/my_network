@@ -17,7 +17,7 @@ const Log = require('../models/log')
 
 
 /**
- * 保存日志文件
+ * 保存 / 更新 日志文件
  * @param filePath 要保存的文件路径
  * @param fileName 该文件的文件名
  * @param logInfo  该文件的日志类型
@@ -46,7 +46,7 @@ exports.saveLogFile = async (filePath, fileName, logInfo) => {
 							fileContent: data,
 							fileSize: data.length
 						}, {new: true})
-							.then(res => console.log(res, '文件更新成功'))
+							.then(res => console.log('文件更新成功'))
 							.catch(() => console.log('文件更新失败'))
 
 					}).catch((err) => {

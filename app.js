@@ -9,6 +9,10 @@ const express = require('express')
 const cors = require('cors')
 // 引入日志处理中间件
 const saveMorgan = require('./src/middleware/saveReqLogs')
+// 引入解析 application/formData 表单请求体数据的中间件
+const multer  = require('multer')
+// 解析表单请求体
+const upload = multer()
 
 // 引入路由
 const userRouter = require('./src/router/user')
@@ -31,10 +35,12 @@ const app = express();
 app.use(saveMorgan)
 // 处理跨域
 app.use(cors());
-
+// 解析表单请求体
+app.use(upload.none())
 // 挂载路由
 app.use('/user', userRouter);
 
+// 处理页面 404
 
 
 // 请求出错处理

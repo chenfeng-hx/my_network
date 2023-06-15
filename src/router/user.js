@@ -13,21 +13,20 @@
 const { Router } = require('express');
 
 // 引入用户身份请求对应的验证规则
-const { userLoginValidator } = require('../validator/user')
+const { userLoginValidator,  userRegisterValidator} = require('../validator/user')
 // 引入身份验证之后的处理
-const { userLoginHandler } = require('../controllers/user')
+const { userLoginHandler, userRegisterHandler } = require('../controllers/user')
+
 
 // 创建路由实例对象
 const router = Router();
 
 // 用户登录
-// router.get('/login', userLoginValidator, userLoginHandler, (req, res) => {
-// 	res.send('nihao')
-// })
+router.get('/login', userLoginHandler)
 
-router.get('/login', (req, res) => {
-	res.send('he')
-})
+
+// 用户注册
+router.post('/register', userRegisterValidator,  userRegisterHandler);
 
 // 导出路由
 module.exports = router
