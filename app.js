@@ -12,11 +12,13 @@ const saveMorgan = require('./src/middleware/saveReqLogs')
 
 // 引入路由
 const userRouter = require('./src/router/user')
+// 连接数据库
+require('./src/utils/dbConnection');
 
 
 
 // 引入基础变量
-const { PORT } = require('./src/config/base-varibale')
+const { PORT } = require('./src/config/base-variable')
 // 引入错误处理中间件
 const errorHandler = require('./src/middleware/error-handler')
 

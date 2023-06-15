@@ -11,8 +11,14 @@
 
 // 项目监听的端口号
 const PORT = process.env.PORT || 9000
-
+// mongodb 本地连接地址
+const localAddr = 'mongodb://127.0.0.1:27017/network'
+// 保存的日志的类型
+const logFileType = ['HttpReq', 'dbCRUD']
 
 module.exports = {
 	PORT,
+	localAddr,
+	logFileType,
+
 }

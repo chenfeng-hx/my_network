@@ -11,6 +11,9 @@
 
 // 引入日志处理中间件
 const morgan = require('morgan')
+// 可以使用 token 自定义日志的参数
+// const { token } = require("morgan");
+
 // 引入文件处理
 const fs = require('fs')
 // 引入路径处理
@@ -18,13 +21,21 @@ const path = require('path')
 
 // 引入时间函数作为每一个日志文件的文件名称
 const { getCurrentDate } = require('../utils/getDate')
-// 可以使用 token 自定义日志的参数
-// const { token } = require("morgan");
+// 引入日志的类型
+const { logFileType } = require('../config/base-variable')
+// 将日志文件保存到数据库
+const {saveLogFile} = require("../utils/saveLogs");
+// 定时器保存日志文件
+const {startTimer} = require("../utils/TimeClock");
 
 // 当天应该创建的文件名
-const fileName = getCurrentDate() + '.log';
+let fileName = getCurrentDate() + '.log';
+// 前天的文件名
+let preFileName = '2023-06-14.log';
 // 文件路径
-const filePath = path.join(__dirname, `../../public/requestLogs/${fileName}`);
+let filePath = path.join(__dirname, `../../public/requestLogs/${fileName}`);
+// 前天的文件路径
+let preFilePath = path.join(__dirname, `../../public/requestLogs/${preFileName}`);
 
 // 首先创建当天的日志文件(异步操作, 防止阻塞主进程请求的响应)
 // fs.appendFile(filePath, '祝好运呀@ _ @\n', err => {
@@ -42,3 +53,24 @@ const saveMorgan =  morgan(format, { stream: logStream });
 
 // 导出配置
 module.exports = saveMorgan
+
+// 更新变量并保存文件到数据库
+const upDateVariable = () => {
+	// 如果是当天, 那 fileName 不会变, 否则就执行 if
+	fileName = getCurrentDate() + '.log';
+	if (fileName !== preFileName) {
+		// 保存前一天的日志文件(其实此时的 filePath 还没有发生改变, 还是之前的文件路径, 可以省掉 preFilePath)
+		saveLogFile(preFilePath, preFileName, logFileType[0]).catch();
+		// 更新
+		filePath = path.join(__dirname, `../../public/requestLogs/${fileName}`)
+		preFilePath = fileName;
+		preFilePath = filePath;
+	}
+	// 保存当天的日志文件(这一步其实可以不用做, 可以始终只保存前一天的日志文件)
+	saveLogFile(filePath, fileName, logFileType[0]).catch();
+}
+
+// 每隔一段时间去更新变量(每隔一分钟去更新, 这样做会导致有较少的当天的请求日志会记录在昨天)
+startTimer(upDateVariable, 1000 * 10)
+// 保存每天的日志文件(其实更好地做法是通过 fs.watch 监视文件内容的变化去保存, 可以保证每个文件的所有内容都被保存到)
+// startTimer(saveLogFile, 1000 * 60 * 60 * 12, filePath, fileName, logFileType[0])
