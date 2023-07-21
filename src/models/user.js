@@ -66,8 +66,7 @@ userSchema.pre('save', function (next) {
 	// 如果不存在, 则指定默认值
 	if (!this.personalIntroduction) {
 		this.personalIntroduction =
-			this.sex ===
-			'boy'
+			this.sex === 'boy'
 				? '大帅哥一枚'
 				: this.sex === 'girl'
 					? '大漂亮一枚'

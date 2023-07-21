@@ -14,7 +14,7 @@ const multer  = require('multer')
 // 解析表单请求体
 const upload = multer()
 
-// 引入路由
+// 引入用户路由
 const userRouter = require('./src/router/user')
 // 连接数据库
 require('./src/utils/dbConnection');

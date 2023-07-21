@@ -13,20 +13,23 @@
 const { Router } = require('express');
 
 // 引入用户身份请求对应的验证规则
-const { userLoginValidator,  userRegisterValidator} = require('../validator/user')
+const { userLoginValidator,  userRegisterValidator, userGetCodeValidator} = require('../validator/user')
 // 引入身份验证之后的处理
-const { userLoginHandler, userRegisterHandler } = require('../controllers/user')
+const { userLoginHandler, userRegisterHandler, userGetCodeHandler } = require('../controllers/user')
 
 
 // 创建路由实例对象
 const router = Router();
 
 // 用户登录
-router.get('/login', userLoginHandler)
+router.get('/login', userLoginValidator, userLoginHandler)
 
 
-// 用户注册
+// 用户注册(先通过字段的校验，然后根据校验结果进行结果逻辑处理)
 router.post('/register', userRegisterValidator,  userRegisterHandler);
+
+// 用户点击按钮获取邮箱验证码
+router.post('/getVerificationCode', userGetCodeValidator, userGetCodeHandler);
 
 // 导出路由
 module.exports = router
