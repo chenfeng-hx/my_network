@@ -11,25 +11,35 @@
 
 // 引入路由函数
 const { Router } = require('express');
-
 // 引入用户身份请求对应的验证规则
-const { userLoginValidator,  userRegisterValidator, userGetCodeValidator} = require('../validator/user')
+const userValidator = require('../validator/user')
 // 引入身份验证之后的处理
-const { userLoginHandler, userRegisterHandler, userGetCodeHandler } = require('../controllers/user')
+const userHandler = require('../controllers/user')
 
 
 // 创建路由实例对象
 const router = Router();
 
 // 用户登录
-router.get('/login', userLoginValidator, userLoginHandler)
-
+router.get('/login', userValidator.userLoginValidator, userHandler.userLoginHandler)
 
 // 用户注册(先通过字段的校验，然后根据校验结果进行结果逻辑处理)
-router.post('/register', userRegisterValidator,  userRegisterHandler);
+router.post('/register', userValidator.userRegisterValidator,  userHandler.userRegisterHandler);
 
 // 用户点击按钮获取邮箱验证码
-router.post('/getVerificationCode', userGetCodeValidator, userGetCodeHandler);
+router.post('/getVerificationCode', userValidator.userGetCodeValidator, userHandler.userGetCodeHandler);
+
+// 用户修改密码
+router.patch('/changePwd', userValidator.userChangePwdValidator, userHandler.userChangePwdHandler);
+
+// 用户修改个人信息获取邮箱验证码
+router.post('/changeInfoGetCode', userValidator.userChangeInfoGetCodeValidator, userHandler.userChangeInfoGetCodeHandler);
+
+// 用户修改个人信息
+router.patch('/changeInfo', userValidator.userChangeInfoValidator, userHandler.userChangeInfoHandler);
+
+
+
 
 // 导出路由
 module.exports = router

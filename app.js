@@ -37,8 +37,10 @@ app.use(saveMorgan)
 app.use(cors());
 // 解析表单请求体
 app.use(upload.none())
-// 挂载路由
+// 挂载用户操作相关的路由
 app.use('/user', userRouter);
+// 挂载文章相关的路由
+// app.use()
 
 // 处理页面 404
 

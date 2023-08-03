@@ -1,6 +1,6 @@
 /**
  * 当前代码编辑信息:
- *     由用户 chenfeng 使用 WebStorm 在 “server” 中
+ *     由用户 尘封 使用 WebStorm 在 “server” 中
  *     于 2023-07-20 12:16:28 编写而成！
  *     祝你食用愉快！！！
  */
@@ -16,10 +16,11 @@
  */
 
 const crypto = require('crypto')
+const { nanoid } = require('nanoid')
 
 exports.getCryptoCode = Info => {
 	// 原始文本(待加密)
-	let str = Info.username + Info.email + Info.password;
+	let str = Info.username + Info.email + Info.password + nanoid();
 
 	// 此处应该先 hash 一次， 后续再进行一次 hash
 	const strHash = crypto.createHash('md5').update(str).digest('hex');     // length: 32
@@ -51,7 +52,7 @@ exports.getCryptoCode = Info => {
 	// 截取得到的 hash 值
 	// 1. 判断 str 和 hash 的长度,确定切取长度的位置
 	let sliceIndex = str.length >= hash.length ? str.length % hash.length : str.length;
-	// console.log(sliceIndex);
+	console.log(sliceIndex);
 	// 2. 进行截取
 	let sliceText = "";
 	// 长度足够的情况
@@ -60,9 +61,9 @@ exports.getCryptoCode = Info => {
 	} else {
 		// 长度不足的情况下，先截取后半段，再从头开始截取
 		sliceText = hash.slice(sliceIndex, hash.length - 1);
-		// console.log(sliceText);
+		console.log(sliceText);
 		sliceText += hash.slice(0, 6 - (hash.length - 1 - sliceIndex));
-		// console.log(sliceText);
+		console.log(sliceText);
 	}
 
 	// 对 hash 值进行处理得到数字验证码
@@ -75,7 +76,10 @@ exports.getCryptoCode = Info => {
 			verificationCode += sliceText[i];
 		}
 	}
-	// console.log(verificationCode);
+	if (verificationCode.length < 6) {
+		verificationCode += (6 - verificationCode.length) * '0';
+	}
+	console.log(verificationCode);
 	return verificationCode;
 
 }
@@ -83,6 +87,6 @@ exports.getCryptoCode = Info => {
 // 测试 demo
 // getCryptoCode({
 // 	username: 'cheng',
-// 	password: 'hxxhz',
+// 	password: 'adsaas',
 // 	email: "m1373951541@163.com"
 // })

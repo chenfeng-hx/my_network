@@ -1,15 +1,8 @@
 /**
  * 当前代码编辑信息:
- *     由用户 chenfeng 使用 WebStorm 在 “server” 中
+ *     由用户 尘封 使用 WebStorm 在 “server” 中
  *     于 2023-07-21 17:57:49 编写而成！
  *     祝你食用愉快！！！
- */
-
-/**
- * 当前代码编辑信息:
- *    由用户 尘封 使用 WebStorm 在 “node-server” 中
- *    于 2023-06-14 16:56:29 编写而成！
- *    祝你食用愉快！！！
  */
 
 /**
@@ -17,7 +10,7 @@
  */
 
 const mongoose = require("mongoose");
-const { Schema } = require('mongoose')
+const { Schema } = require('mongoose');
 // 引入公共字段
 const { commonPrototypeSchema } = require('./base-model')
 
@@ -27,7 +20,7 @@ const verificationCodeSchema = new Schema({
 		type: String,
 		require: true,
 		trim: true,
-		// unique: true
+		unique: true
 	},
 	// 邮箱验证码
 	verificationCode: {
@@ -35,14 +28,19 @@ const verificationCodeSchema = new Schema({
 		require: true,
 		trim: true,
 	},
+	// 密钥
+	secret: {
+		type: String,
+		require: true,
+		default: "lyy",
+		trim: true
+	},
 	...commonPrototypeSchema,
 
 })
 
-
-
 // 创建模型
-const verificationCode = mongoose.model('VerificationCode', verificationCodeSchema);
+const verificationCode = mongoose.model('VerificationCode', verificationCodeSchema, 'verificationcodes');
 
 // 导出模型
 module.exports = verificationCode

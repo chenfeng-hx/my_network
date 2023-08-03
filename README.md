@@ -16,6 +16,7 @@
    6. morgan: 用于打印日志并进行存储,方便后续的请求查询, 对一些 bug 的处理回溯
    7. multer: 用于解析表单请求体 formData
    8. nodemailer: 用于向需要注册账号的邮箱发送验证码
+   9. nanoid: 用于生成 token 的唯一限定字符串
 
 
 ## 说明 test
