@@ -20,6 +20,22 @@ const Code = require('../models/verificationCodes')
 // 生成 token
 const { generateToken } = require('../utils/getToken')
 
+// 用户打开网站时查询账户信息
+exports.getUserHandler = async (req, res, next) => {
+	try {
+		const result = validationResult(req);
+		// 如果有校验失败的情况，向前端发送字段校验异常信息
+		if (!result.isEmpty()) {
+			return res.status(401).json({ errors: result.array() })
+		}
+		// 否则校验成功发送对应的用户信息
+		return res.status(200).json({
+			user: req.user,
+		})
+	} catch (err) {
+		next(err);
+	}
+}
 
 // 用户登录
 exports.userLoginHandler = async (req, res, next) => {

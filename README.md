@@ -17,6 +17,7 @@
    7. multer: 用于解析表单请求体 formData
    8. nodemailer: 用于向需要注册账号的邮箱发送验证码
    9. nanoid: 用于生成 token 的唯一限定字符串
+   10. qiniu: 七牛云SDK,获取相关云文件并上传
 
 
 ## 说明 test

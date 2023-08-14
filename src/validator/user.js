@@ -19,6 +19,29 @@ const verificationCodes  = require('../models/verificationCodes')
 const { getCryptoCode } = require('../utils/verificationCode')
 const jwt = require("jsonwebtoken");
 
+// 用户打开网站时查询账户信息
+exports.getUserValidator = [
+	// 校验 token
+	header('Authorization')
+		.trim()
+		.isJWT()
+		.custom(async (value, { req }) => {
+			// 先拿到生成 token 的密钥
+			// 1. 先拿到 email
+			const { username } = req.body;
+			const user = await User.findOne({ username });
+			// 2. 通过 email 查询密钥
+			const secret = await verificationCodes.findOne({ email: user.email });
+
+			// 通过 JWT 的校验
+			jwt.verify(value, secret.secret, (err, decoded) => {
+				if (err) throw new Error('token失效，请重新登录');
+				// 校验成功则将解密后的信息挂载到 req 中方便后续的操作
+				req.decoded = decoded;
+			})
+		})
+		.withMessage('token失效, 请重新登录'),
+]
 
 // 用户登录信息校验规则
 exports.userLoginValidator = [
@@ -93,15 +116,16 @@ exports.userRegisterValidator = [
 		.isLength({ min: 6, max: 6 })
 		.custom(async (value, { req }) => {
 
-			// const code = await verificationCodes.findOne({ email: req.body.email, verificationCode: value });
-			// // 如果不存在
-			// if (!code) throw new Error('请填写正确的验证码')
+			const code = await verificationCodes.findOne({ email: req.body.email, verificationCode: value });
+			// 如果不存在
+			if (!code) throw new Error('请填写正确的验证码')
 			// // 没有通过判断说明存在
 
 			// 9ms 应该更快速于数据库查询
-			const { username, password, email } = req.body;
-			const code = await getCryptoCode({ username, password, email });
-			if (code !== value) throw new Error('请填写正确的验证码');
+			// add：逻辑有问题，nanoid() 是会变化的
+			// const { username, password, email } = req.body;
+			// const code = await getCryptoCode({ username, password, email });
+			// if (code !== value) throw new Error('请填写正确的验证码');
 
 
 		})
@@ -224,6 +248,8 @@ exports.userChangeInfoValidator = [
 			// 1. 先拿到 email
 			const { username } = req.body;
 			const user = await User.findOne({ username });
+			req.user = user;
+
 			// 2. 通过 email 查询密钥
 			const secret = await verificationCodes.findOne({ email: user.email });
 
@@ -231,7 +257,7 @@ exports.userChangeInfoValidator = [
 			jwt.verify(value, secret.secret, (err, decoded) => {
 				if (err) throw new Error('token失效，请重新登录');
 				// 校验成功则将解密后的信息挂载到 req 中方便后续的操作
-				req.decoded = decoded;
+				// req.decoded = decoded;
 			})
 		})
 		.withMessage('token失效, 请重新登录'),

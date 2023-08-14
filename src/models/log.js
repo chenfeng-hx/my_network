@@ -14,6 +14,9 @@ const { Schema } = require('mongoose')
 const { commonPrototypeSchema } = require('./base-model')
 const mongoose = require("mongoose");
 
+// 引入常量外链地址
+const { preUrl } = require('../config/base-variable');
+
 const logSchema = new Schema({
 	// 日志的标题
 	fileName:{
@@ -32,9 +35,17 @@ const logSchema = new Schema({
 	},
 	// 日志的大小
 	fileSize: Number,
+	// 日志的网络存储位置
+	fileSaveAddr: {
+		type: String,
+	},
 	...commonPrototypeSchema,
 })
 
+logSchema.pre('save', function (next) {
+	this.fileSaveAddr = preUrl + 'server-default/root/reqLogs/' + this.fileName;
+	next();
+})
 
 // 创建模型
 const Log = mongoose.model('Log', logSchema);

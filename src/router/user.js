@@ -20,6 +20,9 @@ const userHandler = require('../controllers/user')
 // 创建路由实例对象
 const router = Router();
 
+// 用户打开网站时查询账户信息(根据 token , 七天/30天免登录状态)
+router.get('/getUser', userValidator.getUserValidator, userHandler.getUserHandler)
+
 // 用户登录
 router.get('/login', userValidator.userLoginValidator, userHandler.userLoginHandler)
 

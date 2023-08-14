@@ -57,6 +57,33 @@ const userSchema = new Schema({
 	},
 	// 个人简介(好像都在用 bio 定义这个字段)
 	personalIntroduction: String,
+	// 用户头像地址(前端用户自己选择)
+	avatar: {
+		type: String,
+		default: ''
+	},
+	// 用户文章
+	articles: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Article'
+		}
+	],
+	// 点赞的文章
+	likes: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Article'
+		}
+	],
+	// 收藏的文章
+	collections: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Article'
+		}
+	],
+	// 公共字段
 	...commonPrototypeSchema,
 
 })

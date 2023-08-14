@@ -16,8 +16,14 @@ const upload = multer()
 
 // 引入用户路由
 const userRouter = require('./src/router/user')
+//引入文章路由
+const articleRouter = require('./src/router/article')
+
+
 // 连接数据库
 require('./src/utils/dbConnection');
+// 连接七牛云并上传文件
+require('./src/utils/uploadFile');
 
 
 
@@ -35,12 +41,12 @@ const app = express();
 app.use(saveMorgan)
 // 处理跨域
 app.use(cors());
-// 解析表单请求体
-app.use(upload.none())
+// 解析表单请求体(接收文件)
+app.use(upload.single('file'))
 // 挂载用户操作相关的路由
 app.use('/user', userRouter);
 // 挂载文章相关的路由
-// app.use()
+app.use('/article', articleRouter);
 
 // 处理页面 404
 

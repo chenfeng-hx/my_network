@@ -21,9 +21,10 @@ exports.generateToken = Info => {
 	try {
 		// 生成随机密钥
 		const secret = nanoid();
-		console.log('nanoid',secret);
+		// token 生效的时长
+		const effectiveDuration = Info.time || '1h';
 		// 生成 token(以 username, password 为信息生成)
-		const token = jwt.sign({ ...Info }, secret);
+		const token = jwt.sign({ ...Info }, secret, { expiresIn: effectiveDuration });
 		// 对 secret 进行存储,如果需要生成 token，就必定已经有了账号，所以一定可以查询到, 方便后续的验证
 		VerificationCode.updateOne(
 			// 查询条件

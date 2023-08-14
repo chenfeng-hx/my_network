@@ -28,8 +28,8 @@ const {startTimer} = require("../utils/TimeClock");
 
 // 当天应该创建的文件名
 let fileName = getCurrentDate() + '.log';
-// 前天的文件名
-let preFileName = '2023-07-18.log';
+// 前一天的文件名
+let preFileName = '2023-08-10.log';
 // 文件路径
 let filePath = path.join(__dirname, `../../public/requestLogs/${fileName}`);
 // 前天的文件路径

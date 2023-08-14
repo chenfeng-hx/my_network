@@ -32,7 +32,7 @@ const verificationCodeSchema = new Schema({
 	secret: {
 		type: String,
 		require: true,
-		default: "lyy",
+		default: "",
 		trim: true
 	},
 	...commonPrototypeSchema,
