@@ -12,7 +12,7 @@
  * 1. 该组件显示所有的评论，评论区
  * 2. 评论的内容由时间决定，最新的评论放在最前面
  */
-import commentItem from "@/components/leaveMsgBoard/commentItem.vue";
+import commentItem from "@/views/leaveMsgBoard/components/commentItem.vue";
 
 export default {
 	name: "allComments",

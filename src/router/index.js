@@ -7,11 +7,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import MessageBoard from "@/views/messageBoard.vue";
-import Home from "@/views/Home.vue";
+import MessageBoard from "@/views/leaveMsgBoard/messageBoard.vue";
+import Home from "@/views/Home/Home.vue";
 const routes = [
 	{ path: '/', component: Home },
-	{ path: '/msgBoard', component: MessageBoard }
+	{ path: '/home', component: Home },
+	{ path: '/msgBoard', component: MessageBoard },
+
 ]
 
 

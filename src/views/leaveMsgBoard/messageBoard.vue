@@ -11,8 +11,8 @@
  * 1. 该页面用于显示留言板总体架构
  *
  */
-import allComments from "@/components/leaveMsgBoard/allComments.vue";
-import leaveMessage from "@/components/leaveMsgBoard/leaveMessage.vue";
+import allComments from "@/views/leaveMsgBoard/components/allComments.vue";
+import leaveMessage from "@/views/leaveMsgBoard/components/leaveMessage.vue";
 export default {
   name: "messageBorad",
   components: {

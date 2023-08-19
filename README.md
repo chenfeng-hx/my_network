@@ -1,24 +1,13 @@
-# first-demo
+# 前端页面
 
-## Project setup
-```
-npm install
-```
+## 插件应用
+1. element-ui: 主样式库
+2. less-loader: 解析 less
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 调用的 API
+1. 首页打字机语句：
+   1. 一言： https://developer.hitokoto.cn/sentence/
+   2. 彩虹屁： https://api.shadiao.pro/
+   3. 青云客诗词： 

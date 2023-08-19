@@ -1,6 +1,6 @@
 <template>
-	<!-- 注释 -->
-	<div>
+	<!-- 页尾 -->
+	<div class="container">
 		<div class="icp">
 			<span>© 2023 生活碎片</span>&nbsp;&nbsp;
 			<a href="https://beian.miit.gov.cn">宁ICP备2023000303号-1</a>
@@ -22,13 +22,20 @@ export default {
 </script>
 
 <style scoped lang="less">
-.icp {
-	display: flex;
-	justify-content: center;
-	font-size: 13px;
-	color: #FFFFFF;
-	a {
+.container {
+	width: 100%;
+	height: 20vh;
+	background-color: rgba(0, 0, 0, .3);
+
+
+	.icp {
+		display: flex;
+		justify-content: center;
+		font-size: 13px;
 		color: #FFFFFF;
+		a {
+			color: #FFFFFF;
+		}
 	}
 }
 </style>

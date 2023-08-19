@@ -9,6 +9,10 @@ import router from "@/router";
 import "./style/base.css";
 // 引入插件
 import "animate.css";
+// 引入样式库
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 Vue.config.silent = true

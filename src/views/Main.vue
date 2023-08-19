@@ -1,5 +1,5 @@
 <template>
-	<!-- 注释 -->
+	<!-- 路由页面出口 -->
 	<div>
 		<router-view></router-view>
 	</div>
@@ -12,12 +12,9 @@
  *    于 2023-03-26 22:55:10 编写而成！
  *    祝你食用愉快！！！
  */
-import Home from "@/views/Home.vue";
 export default {
+	// eslint-disable-next-line vue/multi-word-component-names
 	name: "Main",
-	components: {
-		Home,
-	}
 }
 </script>
 
