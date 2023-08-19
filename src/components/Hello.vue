@@ -1,6 +1,8 @@
 <script>
 import {defineComponent} from "vue";
 export default defineComponent({
+	// eslint-disable-next-line vue/multi-word-component-names
+	name: "Hello",
 	data() {
 		return {
 			isAnimationStarted: false
@@ -31,15 +33,13 @@ export default defineComponent({
 </template>
 
 <style scoped lang="less">
-body {
-	background: #ff837b;
-}
 #container {
 	width: 600px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-53%, -60%);
+	z-index: 1000;
 	&.fin {
 		.path-1, .path-2, .path-3 {
 			stroke-dashoffset: 0;

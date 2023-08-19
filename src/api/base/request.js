@@ -10,7 +10,7 @@ import axios from "axios";
 export function request(config) {
 	// 创建 axios 实例
 	const instance = axios.create({
-		baseURL: 'https://localhost:9000',
+		baseURL: 'http://localhost:9000',
 		headers: {
 			"Authorization": localStorage.getItem("token"),
 		},
