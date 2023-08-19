@@ -8,8 +8,11 @@
 		<!-- 进入首页特效展示 -->
 		<Hello v-if="showHello" />
 		<div class="mark" v-if="showHello"></div>
+		<!-- 右键鼠标菜单展示 -->
+		<RightClickMenu />
+		<!-- 侧边固定栏 -->
 		<FixedBar />
-		<!--<RightClickMenu />-->
+
 
 	</div>
 </template>
@@ -23,7 +26,7 @@ import Footer from "@/components/Footer.vue";
 import MouseClick from "@/components/MouseClick.vue";
 import Hello from "@/components/Hello.vue";
 import FixedBar from "@/components/FixedBar.vue";
-// import RightClickMenu from "@/components/RightClickMenu.vue"
+import RightClickMenu from "@/components/RightClickMenu.vue"
 export default {
 	name: 'App',
 	data() {
@@ -39,7 +42,7 @@ export default {
 		Header,
 		Footer,
 		Hello,
-		// RightClickMenu,
+		RightClickMenu,
 	},
 	mounted() {
 		// 销毁 Hello 组件

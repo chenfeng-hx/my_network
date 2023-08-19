@@ -12,9 +12,10 @@ export default defineComponent({
 	name: "TypeWriter",
 	data() {
 		return {
-			text: '2023年，喜迎新春，玉兔吉祥',
+			// 这个长度刚好能和遮罩层 Hello 的停留时间相对应，新句子出现之后刚好能展示到
+			text: '2023年，喜迎新春，玉兔吉祥。 ',
 			writeSpeed: 200,
-			deleteSpeed: 200,
+			deleteSpeed: 100,
 			isDelete: false,
 			index: 0,
 			sentence: '',

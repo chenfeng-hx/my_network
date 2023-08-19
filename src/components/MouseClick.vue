@@ -29,16 +29,17 @@ export default defineComponent({
 			word.addEventListener('animationend', function() {
 				word.parentNode.removeChild(word);
 			})
-			document.body.appendChild(word);
 			word.textContent = this.words[index];
 			document.body.appendChild(word)
 		}
 	},
 	mounted() {
 		document.body.addEventListener('click', this.createWord);
+		document.body.addEventListener('contextmenu', this.createWord);
 	},
 	beforeDestroy() {
 		document.body.removeEventListener('click', this.createWord);
+		document.body.removeEventListener('contextmenu', this.createWord);
 	}
 })
 

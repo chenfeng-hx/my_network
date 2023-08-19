@@ -6,13 +6,45 @@
  *     祝你食用愉快！！！
  */
 
+import { defineComponent } from "vue";
+
+export default defineComponent({
+	name: "RightClickMenu",
+	methods: {
+		// 阻止鼠标右键的默认事件并弹出该窗口
+		preventRightClick(event) {
+			// 阻止默认的右键事件
+			event.preventDefault();
+			// 如果第二次也是使用右键点击但是换地方的话，应该先将菜单隐藏然后再显示
+			this.hideMenu();
+			// 获取当前的鼠标坐标
+			const x = event.clientX;
+			const y = event.clientY;
+			// 为菜单赋值显示坐标
+			this.$refs.container.style.top = y + 'px';
+			this.$refs.container.style.left = x + 'px';
+			this.$refs.container.style.display = "block";
+		},
+		// 使组件消失
+		hideMenu() {
+			this.$refs.container.style.display = "none";
+		}
+	},
+	mounted() {
+		document.body.addEventListener('contextmenu', this.preventRightClick);
+		document.body.addEventListener('click', this.hideMenu);
+	},
+	beforeDestroy() {
+		document.body.removeEventListener('contextmenu', this.preventRightClick);
+		document.body.removeEventListener('click', this.hideMenu);
+	}
+})
 
 </script>
 
 <template>
 	<!-- 右键菜单 -->
-	<div class="container">
-		<!-- code here -->
+	<div class="container"  ref="container" style="display: none">
 		<div class="menu">
 			<ul class="menu-list">
 				<li class="menu-item"><button class="menu-button"><i data-feather="corner-up-right"></i>Share</button></li>
@@ -45,19 +77,6 @@
 *:after,
 *:before {
 	box-sizing: border-box;
-}
-
-:root {
-	--color-bg-primary: #d0d6df;
-	--color-bg-primary-offset: #f1f3f7;
-	--color-bg-secondary: #fff;
-	--color-text-primary: #3a3c42;
-	--color-text-primary-offset: #898c94;
-	--color-orange: #dc9960;
-	--color-green: #1eb8b1;
-	--color-purple: #657cc4;
-	--color-black: var(--color-text-primary);
-	--color-red: #d92027;
 }
 
 body {
@@ -96,16 +115,6 @@ body {
 	width: 100%;
 	top: 0;
 	flex-direction: column;
-	// &:after {
-	//   content: "";
-	//   position: absolute;
-	//   left: -12px;
-	//   top: 0;
-	//   right: 0;
-	//   bottom: 0;
-	//   display: block;
-	//   outline: 2px solid hotpink;
-	// }
 	&:hover {
 		display: flex;
 	}
@@ -113,6 +122,7 @@ body {
 
 .menu-item {
 	position: relative;
+	cursor: pointer;
 }
 
 .menu-button {
@@ -126,6 +136,7 @@ body {
 	align-items: center;
 	position: relative;
 	background-color: var(--color-bg-secondary);
+	cursor: pointer;
 	&:hover {
 		background-color: var(--color-bg-primary-offset);
 		& + .menu-sub-list {
@@ -186,18 +197,19 @@ body {
 	}
 }
 
-// Codepen spesific styling - only to center the elements in the pen preview and viewport
 .container {
 	position: absolute;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
+	//right: 0;
+	//bottom: 0;
+	//width: 100%;
+	width: 199px;
+	height: 356px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-// End Codepen spesific styling
+
 
 </style>
