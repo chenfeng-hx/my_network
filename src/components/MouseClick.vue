@@ -18,12 +18,15 @@ export default defineComponent({
 		createWord(e) {
 			const word = document.createElement('div');
 			word.id = 'word';
+			// 鼠标点击的坐标
 			const x = e.clientX;
 			const y = e.clientY;
-			// console.log({x, y});
+			const scrollTop = document.documentElement.scrollTop;
+			// 页面卷过的高度
+			// console.log({x, y, scrollTop});
 			const index = Math.floor(Math.random() * this.words.length);
 			// console.log(index);
-			word.style.top = `${y - 15}px`;
+			word.style.top = `${y - 15 + scrollTop}px`;
 			word.style.left = `${x - 23}px`;
 			word.textContent = this.words[index];
 			word.addEventListener('animationend', function() {

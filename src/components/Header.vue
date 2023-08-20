@@ -1,46 +1,50 @@
 <template>
-	<!-- 注释 -->
-	<div class="maxHeader">
-		<!--logo-->
-		<div class="title">生活碎片</div>
-		<!--搜索框-->
-		<div class="search">
-			<input type="text" name="search" id="search" placeholder="请输入搜索信息..." v-model.trim="searchInfo">
-			<button type="button" id="search_btn" @click="sendValue">
-				<img src="../assets/icon_font/搜索.svg" alt="">
-			</button>
-		</div>
-		<!--专栏导航-->
-		<div class="toNav">
-			<ul class="others">
-				<li v-for="item in topBarData" :key="item.id">
-					<span><img :src="require('../assets/icon_font/'+item.icon)" alt=""></span>
-					<span>{{ item.label }}</span>
-				</li>
-			</ul>
-			<!--个人中心-->
-			<div class="personal-center">
-				<el-dropdown>
-					<img src="../assets/images/avatar.jpg" alt="">
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item style="display: flex;" >
-							<img src="@/assets/icon_font/登录.svg" alt="" style="width: 25px;" @click="changeDialog"><span @click="changeDialog">登录</span>
-						</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
+	<div>
+		<!-- 头部导航 -->
+		<div class="maxHeader">
+			<!--logo-->
+			<div class="title">生活碎片</div>
+			<!--搜索框-->
+			<div class="search">
+				<input type="text" name="search" id="search" placeholder="请输入搜索信息..." v-model.trim="searchInfo">
+				<button type="button" id="search_btn" @click="sendValue">
+					<img src="../assets/icon_font/搜索.svg" alt="">
+				</button>
 			</div>
-			<!-- 登录弹出框 -->
-			<el-dialog
-				:visible.sync="dialogLoginForm"
-				center
-				:append-to-body=true
-				:show-close="false"
-				top=45vh
-			>
-				<login />
-			</el-dialog>
+			<!--专栏导航-->
+			<div class="toNav">
+				<ul class="others">
+					<li v-for="item in topBarData" :key="item.id">
+						<span><img :src="require('../assets/icon_font/'+item.icon)" alt=""></span>
+						<span>{{ item.label }}</span>
+					</li>
+				</ul>
+				<!--个人中心-->
+				<div class="personal-center">
+					<el-dropdown>
+						<img src="../assets/images/avatar.jpg" alt="">
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item style="display: flex;" >
+								<img src="@/assets/icon_font/登录.svg" alt="" style="width: 25px;" @click="changeDialog"><span @click="changeDialog">登录</span>
+							</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+				<!-- 登录弹出框 -->
+				<el-dialog
+					:visible.sync="dialogLoginForm"
+					center
+					:append-to-body=true
+					:show-close="false"
+					top=45vh
+				>
+					<login />
+				</el-dialog>
 
+			</div>
 		</div>
+		<!-- 底下在垫一层，否则会出现下面的.top 元素上浮的现象，导致布局混乱 -->
+		<div class="maxHeader" style="position: relative;"></div>
 	</div>
 </template>
 
@@ -119,6 +123,8 @@ export default {
 	height: 60px;
 	display: flex;
 	justify-content: space-between;
+	position: fixed;
+
 	//&:hover {
 	//	background-color: rgba(3, 3, 3, 0.5);
 	//}

@@ -87,7 +87,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<div class="container">
+	<div class="type-writer-container">
 		<!-- 打字机效果组件 -->
 		<!--背景展示文字-->
 		<div class="top">
@@ -109,7 +109,7 @@ export default defineComponent({
 </template>
 
 <style scoped lang="less">
-.container {
+.type-writer-container {
 	.top {
 		position: relative;
 		width: 100%;

@@ -20,8 +20,9 @@ export default defineComponent({
 			// 获取当前的鼠标坐标
 			const x = event.clientX;
 			const y = event.clientY;
+			const scrollTop = document.documentElement.scrollTop;
 			// 为菜单赋值显示坐标
-			this.$refs.container.style.top = y + 'px';
+			this.$refs.container.style.top = y + scrollTop + 'px';
 			this.$refs.container.style.left = x + 'px';
 			this.$refs.container.style.display = "block";
 		},
