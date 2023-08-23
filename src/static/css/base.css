@@ -17,6 +17,8 @@
 	--home-card-left-position: 7%;
 	--home-left-card-width: 60%;
 	--home-right-card-width: 18%;
+	--home-card-background-color: rgba(255, 255, 255, .5);
+	--home-card-backdrop-filter: blur(10px);
 
 }
 

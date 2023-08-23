@@ -105,8 +105,8 @@ export default defineComponent({
 	left: var(--home-card-left-position);
 	border-radius: var(--card-border-radius);
 	overflow: hidden;
-	background-color: rgba(255, 255, 255, .5);
-	backdrop-filter: blur(10px);
+	background-color: var(--home-card-background-color);
+	backdrop-filter: var(--home-card-backdrop-filter);
 }
 
 .item-container {

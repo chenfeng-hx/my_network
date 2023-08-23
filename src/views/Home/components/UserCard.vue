@@ -120,9 +120,8 @@ export default defineComponent({
 .mini-container {
 	width: 100%;
 	height: 60%;
-	background-color: #fff;
-	background-color: rgba(255, 255, 255, .5);
-	backdrop-filter: blur(10px);
+	background-color: var(--home-card-background-color);
+	backdrop-filter: var(--home-card-backdrop-filter);
 	display: inline-flex;
 	align-items: center;
 	flex-direction: column;

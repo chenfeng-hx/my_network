@@ -13,6 +13,8 @@
 			<ArticleSwiper />
 			<!-- 文章分类 -->
 			<ArticleClassification />
+			<!-- 文章列表展示 -->
+			<Article />
 		</div>
 	</div>
 </template>
@@ -30,6 +32,7 @@ import Wave from "@/components/Wave.vue";
 import UserCard from "@/views/Home/components/UserCard.vue";
 import ArticleSwiper from "@/views/Home/components/ArticleSwiper.vue";
 import ArticleClassification from "@/views/Home/components/ArticleClassification.vue";
+import Article from "@/views/Home/components/Article.vue";
 
 export default defineComponent({
 	// 主页面
@@ -48,6 +51,7 @@ export default defineComponent({
 
 	},
 	components: {
+		Article,
 		ArticleClassification,
 		ArticleSwiper,
 		Wave,
