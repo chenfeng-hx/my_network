@@ -1,19 +1,23 @@
 <template>
 	<div>
+		<!-- 头部导航 -->
 		<Header></Header>
+		<!-- 路由页面出口 -->
 		<Main></Main>
-		<Footer class="footer"></Footer>
+		<!-- 页脚 -->
+		<Footer />
 		<!-- 鼠标点击组件 -->
 		<MouseClick />
 		<!-- 进入首页特效展示 -->
-		<Hello v-if="showHello" />
-		<div class="mark" v-if="showHello"></div>
+		<!--<Hello v-if="showHello" />-->
+		<!--<div class="mark" v-if="showHello"></div>-->
 		<!-- 右键鼠标菜单展示 -->
 		<RightClickMenu />
 		<!-- 侧边固定栏 -->
 		<FixedBar />
-
-
+		<!-- 音乐播放 -->
+		<MusicPlayer />
+		<SnowDown />
 	</div>
 </template>
 
@@ -27,6 +31,8 @@ import MouseClick from "@/components/MouseClick.vue";
 import Hello from "@/components/Hello.vue";
 import FixedBar from "@/components/FixedBar.vue";
 import RightClickMenu from "@/components/RightClickMenu.vue"
+import MusicPlayer from "@/components/MusicPlayer.vue";
+import SnowDown from "@/components/SnowDown.vue";
 export default {
 	name: 'App',
 	data() {
@@ -35,6 +41,8 @@ export default {
 		}
 	},
 	components: {
+		SnowDown,
+		MusicPlayer,
 		FixedBar,
 		MouseClick,
 		// messageBoard,
@@ -54,7 +62,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "style/mixin/clear";
+@import "@/static/css/mixin/clear";
 .max {
 	.el-header {
 		.clearfix();

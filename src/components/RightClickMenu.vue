@@ -29,9 +29,28 @@ export default defineComponent({
 		// 使组件消失
 		hideMenu() {
 			this.$refs.container.style.display = "none";
-		}
+		},
+		/* 以下均为右键菜单具体的功能逻辑编写 */
+		// // 打开控制台功能
+		// openConSloe() {
+		// 	console.log('打开控制台');
+		// 	// 打开浏览器控制台的代码
+		// 	// 注意：这里的代码可能会受到浏览器安全策略的限制，不同的浏览器可能有不同的实现方法
+		// 	// 以下是一种跨浏览器的方法，但不一定适用于所有情况
+		// 	if (typeof console._commandLineAPI !== 'undefined') {
+		// 		console._commandLineAPI.toggle();
+		// 	} else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+		// 		console._inspectorCommandLineAPI.toggle();
+		// 	} else if (typeof console.clear !== 'undefined') {
+		// 		console.clear();
+		// 	} else {
+		// 		// 在无法打开控制台的情况下可以尝试以下方法
+		// 		console.log('无法打开控制台');
+		// 	}
+		// },
 	},
 	mounted() {
+		// 组件挂载时为鼠标右键设置监控事件
 		document.body.addEventListener('contextmenu', this.preventRightClick);
 		document.body.addEventListener('click', this.hideMenu);
 	},
@@ -50,6 +69,7 @@ export default defineComponent({
 			<ul class="menu-list">
 				<li class="menu-item"><button class="menu-button"><i data-feather="corner-up-right"></i>Share</button></li>
 				<li class="menu-item"><button class="menu-button"><i data-feather="edit-2"></i>Rename</button></li>
+				<!--<li class="menu-item" @click="openConSloe"><button class="menu-button"><i data-feather="edit-2"></i>打开控制台</button></li>-->
 			</ul>
 			<ul class="menu-list">
 				<li class="menu-item"><button class="menu-button menu-button--black"><i data-feather="circle"></i>No status<i data-feather="chevron-right"></i></button>

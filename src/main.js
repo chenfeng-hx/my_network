@@ -6,13 +6,14 @@ import store from './store'
 // 引入路由
 import router from "@/router";
 // 引入公共样式
-import "./style/base.css";
+import "@/static/css/base.css";
 // 引入插件
 import "animate.css";
 // 引入样式库
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
+
 
 Vue.config.productionTip = false
 Vue.config.silent = true

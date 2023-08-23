@@ -12,8 +12,8 @@ export default defineComponent({
 	name: "TypeWriter",
 	data() {
 		return {
-			// 这个长度刚好能和遮罩层 Hello 的停留时间相对应，新句子出现之后刚好能展示到
-			text: '2023年，喜迎新春，玉兔吉祥。 ',
+			// 这个长度刚好能和遮罩层 Hello 的停留时间相对应，新句子出现之后刚好能展示到 2023年，喜迎新春，玉兔吉祥。
+			text: '欲买桂花同载酒，终不似，少年游 ',
 			writeSpeed: 200,
 			deleteSpeed: 100,
 			isDelete: false,
@@ -51,7 +51,8 @@ export default defineComponent({
 					this.index = 0;
 					this.isDelete = false;
 					// 当删完最后一个字后请求新的句子
-					setTimeout(this.changeText, 2000);
+					// setTimeout(this.changeText, 2000);
+					setTimeout(this.typeWriter, 2000);
 				} else {
 					setTimeout(this.deleteWord, this.deleteSpeed);
 				}

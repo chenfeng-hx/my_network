@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="header-container">
 		<!-- 头部导航 -->
 		<div class="maxHeader">
 			<!--logo-->
@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<!-- 底下在垫一层，否则会出现下面的.top 元素上浮的现象，导致布局混乱 -->
-		<div class="maxHeader" style="position: relative;"></div>
+		<!--<div class="maxHeader" style="position: relative;"></div>-->
 	</div>
 </template>
 
@@ -116,7 +116,11 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "src/style/mixin/clear";
+@import "@/static/css/mixin/clear";
+.header-container {
+	height: 60px;
+}
+
 .maxHeader {
 	z-index: 2;
 	width: 100%;
