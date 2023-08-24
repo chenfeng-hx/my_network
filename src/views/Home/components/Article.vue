@@ -7,10 +7,12 @@
  */
 
 import {defineComponent} from "vue";
+import Pager from "@/views/Home/components/Pager.vue";
 
 export default defineComponent({
 	// eslint-disable-next-line vue/multi-word-component-names
 	name: 'Article',
+	components: {Pager},
 	data() {
 		return {
 			// 热度
@@ -81,7 +83,7 @@ export default defineComponent({
 
 		</div>
 		<div class="article-item">
-
+			分页器
 		</div>
 		<div class="article-item">
 
@@ -92,6 +94,9 @@ export default defineComponent({
 		<div class="article-item">
 
 		</div>
+
+		<!-- 分页器 -->
+		<Pager :total-pages=10 />
 	</div>
 </template>
 

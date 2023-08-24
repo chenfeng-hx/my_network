@@ -15,6 +15,7 @@
 			<ArticleClassification />
 			<!-- 文章列表展示 -->
 			<Article />
+
 		</div>
 	</div>
 </template>
@@ -40,7 +41,7 @@ export default defineComponent({
 	name: "Home",
 	data() {
 		return {
-			avator: "@/assets/images/avatar.jpg"
+
 
 		}
 	},

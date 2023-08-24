@@ -51,8 +51,8 @@ export default defineComponent({
 					this.index = 0;
 					this.isDelete = false;
 					// 当删完最后一个字后请求新的句子
-					// setTimeout(this.changeText, 2000);
-					setTimeout(this.typeWriter, 2000);
+					setTimeout(this.changeText, 2000);
+					// setTimeout(this.typeWriter, 2000);
 				} else {
 					setTimeout(this.deleteWord, this.deleteSpeed);
 				}
