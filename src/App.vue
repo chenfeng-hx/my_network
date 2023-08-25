@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "@/static/css/mixin/clear";
+@import "@/static/css/clear";
 .max {
 	.el-header {
 		.clearfix();

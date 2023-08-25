@@ -14,7 +14,7 @@
 			<!--专栏导航-->
 			<div class="toNav">
 				<ul class="others">
-					<li v-for="item in topBarData" :key="item.id">
+					<li v-for="item in topBarData" :key="item.id" @click="changeRoute(item.path)">
 						<span><img :src="require('../assets/icon_font/'+item.icon)" alt=""></span>
 						<span>{{ item.label }}</span>
 					</li>
@@ -107,6 +107,9 @@ export default {
 		},
 		changeDialog() {
 			this.dialogLoginForm = true;
+		},
+		changeRoute(path) {
+			this.$router.push(path)
 		}
 	},
 	components: {
@@ -116,7 +119,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "@/static/css/mixin/clear";
+@import "@/static/css/clear";
 .header-container {
 	height: 60px;
 }

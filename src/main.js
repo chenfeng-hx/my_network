@@ -6,7 +6,7 @@ import store from './store'
 // 引入路由
 import router from "@/router";
 // 引入公共样式
-import "@/static/css/base.css";
+import "@/static/css/base.less";
 // 引入插件
 import "animate.css";
 // 引入样式库

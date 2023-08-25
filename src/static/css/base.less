@@ -1,0 +1,129 @@
+/* 根样式 */
+:root {
+	--color-bg-primary: #d0d6df;
+	--color-bg-primary-offset: #f1f3f7;
+	--color-bg-secondary: #fff;
+	--color-text-primary: #3a3c42;
+	--color-text-primary-offset: #898c94;
+	--color-orange: #dc9960;
+	--color-green: #1eb8b1;
+	--color-purple: #657cc4;
+	--color-black: var(--color-text-primary);
+	--color-red: #d92027;
+	--background-image: url("@/assets/images/b3a36dfaa9390fb5-ffe333713788d324-ab37281781489fda9b7f8ff3ca84ba67.jpg");
+	--card-top: 5%;
+	--card-border-radius: 8px;
+	--home-card-right-position: 12%;
+	--home-card-left-position: 7%;
+	--home-left-card-width: 60%;
+	--home-right-card-width: 18%;
+	--home-card-background-color: rgba(255, 255, 255, .5);
+	--home-card-backdrop-filter: blur(10px);
+}
+
+/* 公共样式 */
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+	font-family: '楷体';
+}
+
+html {
+	height: 100%;
+}
+
+
+body {
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+
+	/* 设置点击屏幕不出现竖线 */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	-ms-user-select: none;
+	touch-action: none;
+
+	&[route-bg="home"] {
+		background-image: url("@/assets/images/b3a36dfaa9390fb5-ffe333713788d324-ab37281781489fda9b7f8ff3ca84ba67.jpg");
+	}
+
+	&[route-bg="magic-box"] {
+		background-image: url("@/assets/images/back.webp");
+	}
+
+}
+
+a {
+	text-decoration: none;
+	color: #333333;
+}
+a:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+
+li {
+	list-style: none;
+}
+
+
+/* 整个滚动条 */
+/* 宽高分别对应纵向滚动条和横向滚动条的宽度 */
+::-webkit-scrollbar {
+	width: 5px;
+	/* 设置高度让横向滚动条消失 */
+	height: 0;
+	background-color: rgb(244, 249, 252);
+}
+
+::-webkit-scrollbar:hover {
+	background-color: rgb(121, 124, 126);
+}
+
+/* 整个滚动条 */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* 滚动条上的滚动滑块 */
+::-webkit-scrollbar-thumb:hover {
+	background-color: #7b848a;
+	/* 关键代码 */
+	background-image: -webkit-linear-gradient(45deg,
+	rgba(255, 255, 255, 0.4) 25%,
+	transparent 25%,
+	transparent 50%,
+	rgba(255, 255, 255, 0.4) 50%,
+	rgba(255, 255, 255, 0.4) 75%,
+	transparent 75%,
+	transparent);
+	border-radius: 32px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+	background-color: #dbeffd;
+	border-radius: 32px;
+}
+
+
+
+/*!*公共字体样式*!*/
+/*@font-face {*/
+/*	font-family: 'Smiley_Sans_Oblique_斜体';*/
+/*	src: url("@/assets/font/Smiley_Sans_Oblique_斜体.woff2")format("woff2"),*/
+/*	url("@/assets/font/Smiley_Sans_Oblique_斜体.woff")format("woff"),*/
+/*	url("@/assets/font/Smiley_Sans_Oblique_斜体.otf")format("otf"),*/
+/*	url("@/assets/font/Smiley_Sans_Oblique_斜体.ttf")format("ttf");*/
+/*}*/
+/*@font-face {*/
+/*	font-family: '楷体', 'KaiTi', '楷体_GB2312';*/
+/*}*/
+

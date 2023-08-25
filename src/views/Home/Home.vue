@@ -58,12 +58,18 @@ export default defineComponent({
 		Wave,
 		typeWriter,
 		UserCard,
+	},
+	mounted() {
+		document.body.setAttribute('route-bg', 'home');
 	}
 
 })
 </script>
 
 <style scoped lang="less">
+body {
+	background-image: url("@/assets/images/back.webp");
+}
 .show {
 	width: 100%;
 	height: 2000px;

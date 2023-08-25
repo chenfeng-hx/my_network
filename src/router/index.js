@@ -7,12 +7,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import MessageBoard from "@/views/leaveMsgBoard/messageBoard.vue";
-import Home from "@/views/Home/Home.vue";
+
 const routes = [
-	{ path: '/', component: Home },
-	{ path: '/home', component: Home },
-	{ path: '/msgBoard', component: MessageBoard },
+	{ path: '/', name: '首页', component: () => import('@/views/Home/Home.vue') },
+	{ path: '/home', name: '首页', component: () => import('@/views/Home/Home.vue') },
+	{ path: '/msgBoard', name: '留言板', component: () => import('@/views/leaveMsgBoard/messageBoard.vue') },
+	{ path: '/magicBox', name: '百宝箱', component: () => import('@/views/TreasureBox/TreasureBox.vue') },
 
 ]
 
