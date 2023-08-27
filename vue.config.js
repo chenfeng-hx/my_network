@@ -1,4 +1,7 @@
 module.exports = {
   publicPath: './',
-  lintOnSave: false
+  lintOnSave: false,
+  devServer: {
+    port: 3000,
+  }
 }

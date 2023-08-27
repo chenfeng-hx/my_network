@@ -38,7 +38,7 @@
 					:show-close="false"
 					top=45vh
 				>
-					<login />
+					<login @loginSuccess="loginSuccess" />
 				</el-dialog>
 
 			</div>
@@ -96,7 +96,7 @@ export default {
 				}
 			],
 			// 登录弹出框是否显示
-			dialogLoginForm: false,
+			dialogLoginForm: true,
 			searchInfo: '',
 		}
 	},
@@ -108,9 +108,15 @@ export default {
 		changeDialog() {
 			this.dialogLoginForm = true;
 		},
+		// 路由跳转
 		changeRoute(path) {
 			this.$router.push(path)
-		}
+		},
+		// 传递登录成功事件
+		loginSuccess() {
+			this.dialogLoginForm = false;
+		},
+
 	},
 	components: {
 		Login,
@@ -139,12 +145,14 @@ export default {
 		position: relative;
 		top: 12px;
 		left: 22px;
-		font-size: 20px;
+		font-size: 24px;
 		height: 30px;
 		line-height: 30px;
 		text-align: center;
 		cursor: pointer;
 		user-select: none;
+		color: #FFFFFF;
+		font-weight: 800;
 	}
 	.search {
 		position: relative;
@@ -183,6 +191,7 @@ export default {
 		position: relative;
 		right: 40px;
 		user-select: none;
+		color: #FFFFFF;
 
 		.others {
 			li {

@@ -9,7 +9,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: '/', name: '首页', component: () => import('@/views/Home/Home.vue') },
+	{ path: '/', name: 'Home', component: () => import('@/views/Home/Home.vue') },
 	{ path: '/home', name: '首页', component: () => import('@/views/Home/Home.vue') },
 	{ path: '/msgBoard', name: '留言板', component: () => import('@/views/leaveMsgBoard/messageBoard.vue') },
 	{ path: '/magicBox', name: '百宝箱', component: () => import('@/views/TreasureBox/TreasureBox.vue') },

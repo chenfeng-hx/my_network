@@ -6,28 +6,116 @@
 */
 <script>
 import {defineComponent} from 'vue'
+import { userLogin, getVerifyCode, userRegister } from "@/api/base/user";
+import {errorsHandler} from "@/untils/errorsHandler";
+import {message} from "@/untils/message";
 
 export default defineComponent({
 	// eslint-disable-next-line vue/multi-word-component-names
 	name: "Login",
 	data() {
 		return {
+			// 注册表单
 			registerForm: {
 				username: '',
 				password: '',
 				email: '',
-
-			}
+				verificationCode: '',
+			},
+			// 登录表单
+			loginForm: {
+				username: '',
+				password: '',
+			},
 		}
 	},
 	methods: {
+		// 用户登录
+		login() {
+			userLogin(this.loginForm).then(res => {
+				// 说明有问题
+				if (res.data.errors) {
+					// 得到错误原因
+					const errors = errorsHandler(res.data.errors);
+					this.$refs.top5.innerText = errors.username || '';
+					this.$refs.top6.innerText = errors.password || '';
+				} else {
+					// 没有问题了
+					this.$refs.top5.innerText = '';
+					this.$refs.top6.innerText = '';
+					// 存储 token
+					this.$store.commit('setToken', res.data.token);
+					// 触发回调事件改变父组件的状态
+					this.$emit('loginSuccess');
+					// 系统通知
+					message(this, res.data.msg);
+				}
+			}).catch(err => {
+				console.log(err.message);
+			})
+		},
+		// 用户注册
+		register() {
+			// 创建表单
+			const formData = new FormData();
+			formData.append('username', this.registerForm.username);
+			formData.append('password', this.registerForm.password);
+			formData.append('email', this.registerForm.email);
+			formData.append('verificationCode', this.registerForm.verificationCode);
+			// 发送请求
+			userRegister(formData).then(res => {
+				console.log(res.data);
+				if (res.data.errors) {
+					const errors = errorsHandler(res.data.errors);
+					this.$refs.top1.innerText = errors.username || '';
+					this.$refs.top2.innerText = errors.password || '';
+					this.$refs.top3.innerText = errors.email || '';
+					this.$refs.top4.innerText = errors.verificationCode || '';
+				} else {
+					this.$refs.top1.innerText = '';
+					this.$refs.top2.innerText = '';
+					this.$refs.top3.innerText = '';
+					this.$refs.top4.innerText = '';
+					// 向用户提示注册情况
+					message(this, res.data.msg);
+					// 切换为登录页
+					this.signIn();
+				}
+			})
+		},
+		// 用获取验证码
+		getVerificationCode() {
+			// 创建表单
+			const formData = new FormData();
+			formData.append('username', this.registerForm.username);
+			formData.append('password', this.registerForm.password);
+			formData.append('email', this.registerForm.email);
+			// 发送请求
+			getVerifyCode(formData).then(res => {
+				// 出现问题
+				console.log(res.data);
+				if (res.data.errors) {
+					const errors = errorsHandler(res.data.errors);
+					this.$refs.top1.innerText = errors.username || '';
+					this.$refs.top2.innerText = errors.password || '';
+					this.$refs.top3.innerText = errors.email || '';
+				} else {
+					this.$refs.top1.innerText = '';
+					this.$refs.top2.innerText = '';
+					this.$refs.top3.innerText = '';
+					// 问题解决,给用户发送消息
+					message(this, res.data.msg);
+				}
+			})
+		},
 		// 添加 animation 动画
 		signUp() {
 			this.$refs.container.classList.add("right-panel-active");
 		},
 		signIn() {
 			this.$refs.container.classList.remove("right-panel-active");
-		}
+		},
+
 
 	},
 
@@ -41,13 +129,18 @@ export default defineComponent({
 		<div class="form-container sign-up-container">
 			<form>
 				<h1>注册账号</h1>
-				<input type="text" placeholder="用户名" />
-				<div class="errInfo top1"></div>
-				<input type="password" placeholder="密码" />
-				<div class="errInfo top2"></div>
-				<input type="email" placeholder="邮箱" />
-				<div class="errInfo top3"></div>
-				<button ref="signUpButton">注册</button>
+				<input type="text" placeholder="用户名" v-model="registerForm.username" />
+				<div class="errInfo top1" ref="top1"></div>
+				<input type="password" placeholder="密码" v-model="registerForm.password" />
+				<div class="errInfo top2" ref="top2"></div>
+				<input type="email" placeholder="邮箱" v-model="registerForm.email" />
+				<div class="errInfo top3" ref="top3"></div>
+				<div class="verify">
+					<input type="number" placeholder="验证码" v-model="registerForm.verificationCode">
+					<button type="button" @click="getVerificationCode">获取验证码</button>
+					<div class="errInfo top4" ref="top4"></div>
+				</div>
+				<button type="button" ref="signUpButton" style="margin-top: 10px;" @click="register">注册</button>
 			</form>
 		</div>
 		<!-- 登录账号 -->
@@ -60,10 +153,12 @@ export default defineComponent({
 					<a href="#" class="social"></a>
 				</div>
 				<span>or use your account</span>
-				<input type="text" placeholder="用户名/邮箱/手机号" />
-				<input type="password" placeholder="密码" />
+				<input type="text" placeholder="用户名/邮箱/手机号" v-model="loginForm.username" />
+				<div class="errInfo top5" ref="top5"></div>
+				<input type="password" placeholder="密码" v-model="loginForm.password" />
+				<div class="errInfo top6" ref="top6"></div>
 				<a href="#">忘记密码?</a>
-				<button ref="signInButton">登录</button>
+				<button type="button" ref="signInButton" @click="login">登录</button>
 			</form>
 		</div>
 		<div class="overlay-container">
@@ -163,6 +258,24 @@ input {
 	width: 100%;
 }
 
+.verify {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+
+	button {
+		width: 30%;
+		padding: 12px 2px;
+		border-radius: 5px;
+		margin-left: 10px;
+	}
+}
+
+input[type='number'] {
+	width: 65%;
+}
+
 .container {
 	background-color: #fff;
 	border-radius: 10px;
@@ -192,15 +305,27 @@ input {
 }
 
 .top1 {
-	top: 190px;
+	top: 147px;
 }
 
 .top2 {
-	top: 260px;
+	top: 218px;
 }
 
 .top3 {
-	top: 330px;
+	top: 288px;
+}
+
+.top4 {
+	top: 361px;
+}
+
+.top5 {
+	top: 250px;
+}
+
+.top6 {
+	top: 318px;
 }
 
 .sign-in-container {
