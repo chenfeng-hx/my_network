@@ -9,6 +9,9 @@
  * 该文件用于对用户身份验证的处理
  */
 
+// 引入 axios 发送网络请求
+const axios = require("axios");
+
 // 对校验规则的检验结果进行判断
 const { validationResult } = require('express-validator')
 // 引入用户数据库模型
@@ -19,6 +22,7 @@ const { sendEmails } = require('../utils/sendEmail')
 const Code = require('../models/verificationCodes')
 // 生成 token
 const { generateToken } = require('../utils/getToken')
+
 
 // 用户打开网站时查询账户信息
 exports.getUserHandler = async (req, res, next) => {
@@ -43,7 +47,7 @@ exports.userLoginHandler = async (req, res, next) => {
 		const result = validationResult(req);
 		// 如果有校验失败的情况，向前端发送字段校验异常信息
 		if (!result.isEmpty()) {
-			return res.status(401).json({ errors: result.array() })
+			return res.status(201).json({ errors: result.array() })
 		}
 		// 校验成功则发送对应的成功信息
 		// 生成 token 并存储
@@ -59,7 +63,7 @@ exports.userLoginHandler = async (req, res, next) => {
 
 		// 拿到 token 并进行发送
 		return res.status(200).json({
-			msg: '登录成功',
+			msg: `${username}, 欢迎回来`,
 			token,
 			username,
 		})
@@ -68,25 +72,50 @@ exports.userLoginHandler = async (req, res, next) => {
 	}
 }
 
+// 用户使用微信扫码登录
+exports.loginForWeChat = async (req, res, next) => {
+	// 向易登发送用户登录请求
+	axios.get('https://yd.jylt.cc/api/wxLogin/tempUserId?secret=25ffc224')
+		.then(res => {
+			console.log(res.data.data);
+		})
+}
+
+// 微信服务器的回调接口
+exports.loginForWeChatCallBack = async (req, res, next) => {
+	console.log('毁掉了',req);
+	next();
+}
+
+// 用户使用 GitHub 账号进行关联
+exports.loginForGitHub = async (req, res, next) => {
+
+}
+
+// GitHub 服务器进行的回调接口
+exports.loginForGitHubCallBack = async (req, res, next) => {
+
+}
+
 // 用户注册
 exports.userRegisterHandler = (req, res, next) => {
 	try {
 		const result = validationResult(req);
 		// 如果有校验失败的情况，向前端发送字段校验异常信息
 		if (!result.isEmpty()) {
-			return res.status(401).json({ errors: result.array() })
+			return res.status(201).json({ errors: result.array() })
 		}
 		// 校验成功则对用户信息进行存储并发送对应的成功信息
 		// 如果校验成功则一定包含下面的几个字段,进行数据库存储
 		const { username, password, email, phoneNumber, sex, age, personalIntroduction } = req.body;
 		const newUser = new User({ username, password, email, phoneNumber, sex, age, personalIntroduction });
 		newUser.save()
-			.then(() => console.log('存储用户成功'))
-			.catch(err => res.status(400).json({ msg: '存储用户失败'+ err.message }));
-
-		return res.status(200).json({
-			msg: '注册成功'
-		})
+			.then(() => {
+				return res.status(200).json({
+					msg: '注册成功, 请登录'
+				})
+			})
+			.catch(err => res.status(201).json({ msg: '注册失败，请重新尝试或联系管理员！' + err.message }));
 	} catch (err) {
 		next(err);
 	}
@@ -98,35 +127,44 @@ exports.userGetCodeHandler = async (req, res, next) => {
 		const result = validationResult(req);
 		// 校验失败发送失败信息
 		if (!result.isEmpty()) {
-			return res.status(401).json({ errors: result.array() })
+			return res.status(201).json({ errors: result.array() })
 		}
 
 		const { username, password, email } = req.body;
 
-		// 对获取验证码的情况进行判断
-		const dbEmail = await Code.findOne({ email: email })
-		// 邮箱存在，报错
-		if (dbEmail) {
-			return res.status(401).json({ msg: '该账号已存在, 请重新更换邮箱注册' });
-		}
-
 		// 校验成功发送邮箱验证码
 		const verificationCode = await sendEmails({ username, password, email });
 
-
-		// 保存邮箱验证码到数据库方便后续的用户注册进行验证码查找
-		const code = new Code({ email, verificationCode });
-		code.save()
-			.then(() => console.log('验证码存储成功'))
-			.catch(err => {
-				return res.status(400).json({
-					msg: '存储验证码失败' + err.message
+		// 如果以前使用过该邮箱但是并没有实际注册用户成功的，Code 表中存在该邮箱，但是User 表中没有邮箱的情况
+		const hasCode = await Code.findOne({ email });
+		if (hasCode) {
+			hasCode.verificationCode = verificationCode;
+			hasCode.save()
+				.then(() => {
+					return res.status(200).json({
+						msg: '验证码发送成功，请及时查收！'
+					})
 				})
-			});
-
-		return res.status(200).json({
-			msg: '验证码发送成功，请及时查收！'
-		})
+				.catch(err => {
+					return res.status(201).json({
+						msg: '验证码发送失败，请重新尝试或联系管理员！'
+					})
+				});
+		} else {
+			// 保存邮箱验证码到数据库方便后续的用户注册进行验证码查找
+			const code = new Code({ email, verificationCode });
+			code.save()
+				.then(() => {
+					return res.status(200).json({
+						msg: '验证码发送成功，请及时查收！'
+					})
+				})
+				.catch(err => {
+					return res.status(201).json({
+						msg: '验证码发送失败，请重新尝试或联系管理员！'
+					})
+				});
+		}
 	} catch (err) {
 		next(err);
 	}

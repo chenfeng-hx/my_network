@@ -1,12 +1,8 @@
 /**
- * 当前代码编辑信息:
+ * 当前代码编辑信息: 主要处理用户身份验证的验证规则
  *    由用户 尘封 使用 WebStorm 在 “node-server” 中
  *    于 2023-06-13 19:32:34 编写而成！
  *    祝你食用愉快！！！
- */
-
-/**
- * 主要处理用户身份验证的验证规则
  */
 
 // 引入解析后的请求体
@@ -59,17 +55,15 @@ exports.userLoginValidator = [
 		})
 		.withMessage('账号或密码错误'),
 	query('password')
-		.trim().notEmpty().isLength({ min: 5 })
+		.trim().notEmpty().withMessage('密码不能为空')
+		.isLength({ min: 5 })
 		.custom(async (value, {req}) => {
-			const user = await User.findOne({ username: req.query.username, password: value })
-			if (!user) {
-				throw new Error('账号或密码错误');
-			}
-			// 类型和值均相同，但是结果却是相反的
-			// console.log(value !== Object.toString(req.password))
-			// if (value !== Object.toString(req.password)) {
+			// const user = await User.findOne({ username: req.query.username, password: value })
+
+			// if (!user) {
 			// 	throw new Error('账号或密码错误');
 			// }
+			if (req.pass !== value) throw new Error('账号或密码错误');
 		})
 		.withMessage('账号或密码错误'),
 ]
@@ -138,7 +132,8 @@ exports.userGetCodeValidator = [
 	body('username')
 		.trim()      // 去空
 		.notEmpty().withMessage('用户名不能为空')			// 不能为空
-		.escape().withMessage('您已被系统检测到不良行为, 请注意您的征信哦')          // 预防 xss 攻击, <script>(验证了之后感觉好像没什么用)
+		// .escape().withMessage('您已被系统检测到不良行为, 请注意您的征信哦')          // 预防 xss 攻击, <script>(验证了之后感觉好像没什么用)
+		.escape()
 		.isLength({ min: 4 }).withMessage('用户名太短啦! 换一个吧')       // 判断用户名长度
 		.matches(/^[\u4e00-\u9fa5a-zA-Z0-9\-]+$/).withMessage('用户名只能包含汉字、字母、数字或短横线-')  // 判断格式
 		.custom(async value => {

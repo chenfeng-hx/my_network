@@ -20,11 +20,23 @@ const userHandler = require('../controllers/user')
 // 创建路由实例对象
 const router = Router();
 
-// 用户打开网站时查询账户信息(根据 token , 七天/30天免登录状态)
-router.get('/getUser', userValidator.getUserValidator, userHandler.getUserHandler)
+// 用户打开网站时查询账户信息(根据 token , 七天/30天免登录状态)(如果存在 token 的情况下)
+router.get('/getUser', userValidator.getUserValidator, userHandler.getUserHandler);
+
+// 请求微信登录的登录凭证
+router.get('/loginForWeChat', userHandler.loginForWeChat);
+
+// 微信登录的服务器回调
+router.post('/loginForWeChatCallBack', userHandler.loginForWeChatCallBack);
+
+// 请求github登录的登录凭证
+router.get('/loginForGitHub', userHandler.loginForGitHub);
+
+// github登录的服务器回调
+router.post('/loginForGitHubCallBack', userHandler.loginForGitHubCallBack);
 
 // 用户登录
-router.get('/login', userValidator.userLoginValidator, userHandler.userLoginHandler)
+router.get('/login', userValidator.userLoginValidator, userHandler.userLoginHandler);
 
 // 用户注册(先通过字段的校验，然后根据校验结果进行结果逻辑处理)
 router.post('/register', userValidator.userRegisterValidator,  userHandler.userRegisterHandler);

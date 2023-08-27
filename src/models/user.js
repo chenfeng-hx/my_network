@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const { Schema } = require('mongoose')
 // 引入公共字段
 const { commonPrototypeSchema } = require('./base-model')
+const { nanoid } = require('nanoid')
 
 const userSchema = new Schema({
 	// 用户名称
@@ -39,7 +40,7 @@ const userSchema = new Schema({
 	// 用户手机号
 	phoneNumber: {
 		type: String,
-		default: '',
+		default: nanoid(),
 		trim: true,
 		unique: true
 	},
@@ -81,6 +82,21 @@ const userSchema = new Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Article'
+		}
+	],
+	// 用户百宝箱
+	magicBoxes: [
+		{
+			// 模块的名称
+			moduleTitle: {
+				type: String,
+				require: true,
+			},
+			// 模块的图标
+			moduleIcon: {
+				type: String,
+				default: 'http://blogs.xiaohai-hx.cn/view-default/icon/%E9%A3%8E%E8%BD%A6.svg',
+			},
 		}
 	],
 	// 公共字段
