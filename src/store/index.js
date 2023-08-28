@@ -5,7 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        token: localStorage.getItem('token') ? localStorage.getItem('token'):'',   // token
+        // token
+        token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
+        // 用户名（因为后端逻辑的原因需要每次携带用户名验证 token 的正确与否）
+        username: '',
+        // 是否通过<Header />打开登录框
+        loginStatus: false,
     },
     // 同步方法
     mutations: {
@@ -26,12 +31,25 @@ export default new Vuex.Store({
             state.token = '';
             localStorage.removeItem('token');
         },
+        /**
+         * 持久化 当前登录用户名
+         * @param state
+         * @param value String 登录后传递的用户名
+         */
+        setUserName(state, value) {
+            state.username = value;
+        },
+        setDialog(state, value) {
+            state.loginStatus = value;
+        },
     },
 
 
 
     getters: {
-
+        status(state) {
+            return state.loginStatus
+        }
     }
 
 

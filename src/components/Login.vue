@@ -43,10 +43,11 @@ export default defineComponent({
 					// 没有问题了
 					this.$refs.top5.innerText = '';
 					this.$refs.top6.innerText = '';
-					// 存储 token
+					// 存储 token 和 用户名
 					this.$store.commit('setToken', res.data.token);
+					this.$store.commit('setUserName', res.data.username);
 					// 触发回调事件改变父组件的状态
-					this.$emit('loginSuccess');
+					this.$emit('loginSuccess', false);
 					// 系统通知
 					message(this, res.data.msg);
 				}

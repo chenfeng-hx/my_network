@@ -38,7 +38,7 @@
 					:show-close="false"
 					top=45vh
 				>
-					<login @loginSuccess="loginSuccess" />
+					<login @loginSuccess="changeDialog" />
 				</el-dialog>
 
 			</div>
@@ -51,6 +51,7 @@
 <script>
 import "@/assets/icon_font/首页.svg"
 import Login from "@/components/Login.vue";
+import {mapGetters} from "vuex";
 /**
  * 当前代码编辑信息:
  *    由用户 尘封 使用 WebStorm 在 “my-network” 中
@@ -96,8 +97,10 @@ export default {
 				}
 			],
 			// 登录弹出框是否显示
-			dialogLoginForm: true,
+			dialogLoginForm: false,
 			searchInfo: '',
+
+
 		}
 	},
 	methods: {
@@ -105,6 +108,7 @@ export default {
 			console.log(this.searchInfo);
 			this.searchInfo = '';
 		},
+		// 决定是否显示 / 隐藏登录弹出框
 		changeDialog() {
 			this.dialogLoginForm = true;
 		},
@@ -112,14 +116,28 @@ export default {
 		changeRoute(path) {
 			this.$router.push(path)
 		},
-		// 传递登录成功事件
-		loginSuccess() {
-			this.dialogLoginForm = false;
-		},
 
 	},
 	components: {
 		Login,
+	},
+	computed: {
+		...mapGetters(['status']),
+	},
+	watch: {
+		// 监视，当其他组件发送打开登录框的请求
+		status: function (newValue) {
+			if (newValue) {
+				setTimeout(() => this.changeDialog(true), 1500);
+			}
+		},
+		// 当用户关闭登录框时进行修改 store 中的状态（包括通过点击除登录框之外的区域）
+		dialogLoginForm: function (newValue) {
+			// 当该值时 false 时说明用户关闭了登录框，所以修改 state 的状态
+			if (!newValue) {
+				this.$store.commit('setDialog', false);
+			}
+		}
 	}
 }
 </script>
