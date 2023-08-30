@@ -109,8 +109,8 @@ export default {
 			this.searchInfo = '';
 		},
 		// 决定是否显示 / 隐藏登录弹出框
-		changeDialog() {
-			this.dialogLoginForm = true;
+		changeDialog(value) {
+			this.dialogLoginForm = value;
 		},
 		// 路由跳转
 		changeRoute(path) {

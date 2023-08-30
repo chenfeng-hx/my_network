@@ -10,7 +10,7 @@
 			<!-- 个人信息卡片展示 -->
 			<UserCard :avatar=avator />
 			<!-- 轮播图 -->
-			<ArticleSwiper />
+			<!--<ArticleSwiper />-->
 			<!-- 文章分类 -->
 			<ArticleClassification />
 			<!-- 文章列表展示 -->

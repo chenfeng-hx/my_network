@@ -45,7 +45,7 @@ export default defineComponent({
 					this.$refs.top6.innerText = '';
 					// 存储 token 和 用户名
 					this.$store.commit('setToken', res.data.token);
-					this.$store.commit('setUserName', res.data.username);
+					this.$store.commit('setUserName', { 'username' : res.data.username, 'userId' : res.data.userId });
 					// 触发回调事件改变父组件的状态
 					this.$emit('loginSuccess', false);
 					// 系统通知
@@ -130,11 +130,11 @@ export default defineComponent({
 		<div class="form-container sign-up-container">
 			<form>
 				<h1>注册账号</h1>
-				<input type="text" placeholder="用户名" v-model="registerForm.username" />
+				<input type="text" placeholder="用户名" v-model="registerForm.username" @keyup.enter="register" />
 				<div class="errInfo top1" ref="top1"></div>
-				<input type="password" placeholder="密码" v-model="registerForm.password" />
+				<input type="password" placeholder="密码" v-model="registerForm.password" @keyup.enter="register" />
 				<div class="errInfo top2" ref="top2"></div>
-				<input type="email" placeholder="邮箱" v-model="registerForm.email" />
+				<input type="email" placeholder="邮箱" v-model="registerForm.email" @keyup.enter="register" />
 				<div class="errInfo top3" ref="top3"></div>
 				<div class="verify">
 					<input type="number" placeholder="验证码" v-model="registerForm.verificationCode">
@@ -154,9 +154,9 @@ export default defineComponent({
 					<a href="#" class="social"></a>
 				</div>
 				<span>or use your account</span>
-				<input type="text" placeholder="用户名/邮箱/手机号" v-model="loginForm.username" />
+				<input type="text" placeholder="用户名/邮箱/手机号" v-model="loginForm.username" @keyup.enter="login" />
 				<div class="errInfo top5" ref="top5"></div>
-				<input type="password" placeholder="密码" v-model="loginForm.password" />
+				<input type="password" placeholder="密码" autocomplete="current-password" v-model="loginForm.password" @keyup.enter="login" />
 				<div class="errInfo top6" ref="top6"></div>
 				<a href="#">忘记密码?</a>
 				<button type="button" ref="signInButton" @click="login">登录</button>

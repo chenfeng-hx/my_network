@@ -22,8 +22,6 @@
 </template>
 
 <script>
-// 引入留言板组件
-// import messageBoard from "@/views/leaveMsgBoard/messageBoard.vue";
 import Main from "@/views/Main.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
@@ -33,6 +31,7 @@ import FixedBar from "@/components/FixedBar.vue";
 import RightClickMenu from "@/components/RightClickMenu.vue"
 import MusicPlayer from "@/components/MusicPlayer.vue";
 import SnowDown from "@/components/SnowDown.vue";
+import {validatorUser} from "@/api/base/user";
 export default {
 	name: 'App',
 	data() {
@@ -45,12 +44,29 @@ export default {
 		MusicPlayer,
 		FixedBar,
 		MouseClick,
-		// messageBoard,
 		Main,
 		Header,
 		Footer,
 		Hello,
 		RightClickMenu,
+	},
+	methods: {
+		// 用户无感登录 token
+		getUser() {
+			validatorUser().then(res => {
+				if (res.status === 200) {
+					// 关闭某个路由可能出现的一进入就请求数据但是身份验证失败导致的登录框弹出问题
+					this.$store.commit('setDialog', false);
+					this.$store.commit('setUserName', { 'username' : res.data.username, 'userId' : res.data.userId });
+				}
+			}).catch(err => {
+				console.log(err);
+			})
+		}
+	},
+	created() {
+		// 进行登录验证
+		this.getUser();
 	},
 	mounted() {
 		// 销毁 Hello 组件

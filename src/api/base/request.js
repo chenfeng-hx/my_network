@@ -13,6 +13,7 @@ export function request(config) {
 		baseURL: 'http://localhost:9000',
 		headers: {
 			"Authorization": localStorage.getItem("token"),
+			"token_id": localStorage.getItem("token_id"),
 		},
 		timeout: 20000,
 	})

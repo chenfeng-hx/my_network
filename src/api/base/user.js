@@ -8,6 +8,16 @@
 
 import { request } from "@/api/base/request";
 
+
+// 用户打开网站进行 token 校验
+export const validatorUser = () => {
+	return request({
+		url: '/user/getUser',
+		method: 'get',
+	})
+}
+
+
 // 用户请求 用户名 + 密码 登录
 export const userLogin = ({ username, password }) => {
 	return request({

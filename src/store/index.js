@@ -17,11 +17,11 @@ export default new Vuex.Store({
         /**
          * 持久化 token
          * @param state
-         * @param value 新的 token 值
+         * @param token 新的 token 值
          */
-        setToken(state, value) {
-            state.token = value;
-            localStorage.setItem('token', value);
+        setToken(state, token) {
+            state.token = token;
+            localStorage.setItem('token', token);
         },
         /**
          * 删除 token
@@ -34,11 +34,18 @@ export default new Vuex.Store({
         /**
          * 持久化 当前登录用户名
          * @param state
-         * @param value String 登录后传递的用户名
+         * @param username String 登录后传递的用户名
+         * @param userId String 要持久化的用户 Id
          */
-        setUserName(state, value) {
-            state.username = value;
+        setUserName(state, { username, userId }) {
+            state.username = username;
+            localStorage.setItem('token_id', userId);
         },
+        /**
+         * 用于其他组件动态的控制是否展示登录窗口
+         * @param state
+         * @param value
+         */
         setDialog(state, value) {
             state.loginStatus = value;
         },
@@ -49,6 +56,9 @@ export default new Vuex.Store({
     getters: {
         status(state) {
             return state.loginStatus
+        },
+        username(state) {
+            return state.username
         }
     }
 
