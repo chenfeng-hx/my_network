@@ -1,7 +1,3 @@
-/**
- * 程序入口
- */
-
 // 引入主框架
 const express = require('express')
 // 引入路径解析模块

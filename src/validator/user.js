@@ -6,37 +6,21 @@
  */
 
 // 引入解析后的请求体
-const { body, query, header} = require('express-validator')
+const { body, query } = require('express-validator')
 // 引入 User 模型
 const User = require('../models/user')
 // 引入验证码模型
 const verificationCodes  = require('../models/verificationCodes')
 // 其实没必要存储验证码，后知后觉，因为可以再算一遍验证码直接比较，减少IO操作应该更快速
 const { getCryptoCode } = require('../utils/verificationCode')
-const jwt = require("jsonwebtoken");
+
+// 公共校验部分
+const { tokenValidator, tokenInitValidator } = require('./baseValidator')
 
 // 用户打开网站时查询账户信息
 exports.getUserValidator = [
 	// 校验 token
-	header('Authorization')
-		.trim()
-		.isJWT()
-		.custom(async (value, { req }) => {
-			// 先拿到生成 token 的密钥
-			// 1. 先拿到 email
-			const { username } = req.body;
-			const user = await User.findOne({ username });
-			// 2. 通过 email 查询密钥
-			const secret = await verificationCodes.findOne({ email: user.email });
-
-			// 通过 JWT 的校验
-			jwt.verify(value, secret.secret, (err, decoded) => {
-				if (err) throw new Error('token失效，请重新登录');
-				// 校验成功则将解密后的信息挂载到 req 中方便后续的操作
-				req.decoded = decoded;
-			})
-		})
-		.withMessage('token失效, 请重新登录'),
+	tokenInitValidator,
 ]
 
 // 用户登录信息校验规则
@@ -235,27 +219,7 @@ exports.userChangePwdValidator = [
 // 用户修改个人信息
 exports.userChangeInfoValidator = [
 	// 校验 token
-	header('Authorization')
-		.trim()
-		.isJWT()
-		.custom(async (value, { req }) => {
-			// 先拿到生成 token 的密钥
-			// 1. 先拿到 email
-			const { username } = req.body;
-			const user = await User.findOne({ username });
-			req.user = user;
-
-			// 2. 通过 email 查询密钥
-			const secret = await verificationCodes.findOne({ email: user.email });
-
-			// 通过 JWT 的校验
-			jwt.verify(value, secret.secret, (err, decoded) => {
-				if (err) throw new Error('token失效，请重新登录');
-				// 校验成功则将解密后的信息挂载到 req 中方便后续的操作
-				// req.decoded = decoded;
-			})
-		})
-		.withMessage('token失效, 请重新登录'),
+	tokenValidator,
 	// 校验手机号
 	body('phoneNumber')
 		.trim()

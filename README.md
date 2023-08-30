@@ -8,16 +8,16 @@
 
 ## 单个文件注意点 mark
 1. 插件内容:
-   1. express: 项目主框架
-   2. cors: 解决跨域问题(也可以通过设置请求头的方式来解决跨域问题)
-   3. mongoose: 用于和数据库进行交互, 存储用户身份信息
-   4. express-validator: 用于对请求的字段进行校验
-   5. jsonwebtoken: 用于对用户身份信息进行校验, token 的设置和校验
-   6. morgan: 用于打印日志并进行存储,方便后续的请求查询, 对一些 bug 的处理回溯
-   7. multer: 用于解析表单请求体 formData
-   8. nodemailer: 用于向需要注册账号的邮箱发送验证码
-   9. nanoid: 用于生成 token 的唯一限定字符串
-   10. qiniu: 七牛云SDK,获取相关云文件并上传
+    1. express: 项目主框架
+    2. cors: 解决跨域问题(也可以通过设置请求头的方式来解决跨域问题)
+    3. mongoose: 用于和数据库进行交互, 存储用户身份信息
+    4. express-validator: 用于对请求的字段进行校验
+    5. jsonwebtoken: 用于对用户身份信息进行校验, token 的设置和校验
+    6. morgan: 用于打印日志并进行存储,方便后续的请求查询, 对一些 bug 的处理回溯
+    7. multer: 用于解析表单请求体 formData
+    8. nodemailer: 用于向需要注册账号的邮箱发送验证码
+    9. nanoid: 用于生成 token 的唯一限定字符串
+    10. qiniu: 七牛云SDK,获取相关云文件并上传
 
 
 ## 说明 test
@@ -31,7 +31,7 @@
 
 
 ## 待修复 fixme
-1. 
+1.
 
 
 ## 接口文档 api

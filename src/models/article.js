@@ -22,6 +22,10 @@ const articleSchema = new Schema({
 		require: true,
 		ref: 'User',
 	},
+	// 文字的封面图片
+	CoverImage: {
+		type: String,
+	},
 	// 文章点赞数
 	likes: {
 		type: Number,
@@ -44,11 +48,16 @@ const articleSchema = new Schema({
 		type: String,
 		default: ''
 	},
-	// 文章所属的类别(文章分类)
+	// 文章被作者存在哪个文件夹中
 	Classification: {
 		type: String,
-
-	}
+	},
+	// 文章的标签
+	tags: [
+		{
+			type: String,
+		}
+	],
 })
 
 

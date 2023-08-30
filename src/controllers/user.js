@@ -30,11 +30,12 @@ exports.getUserHandler = async (req, res, next) => {
 		const result = validationResult(req);
 		// 如果有校验失败的情况，向前端发送字段校验异常信息
 		if (!result.isEmpty()) {
-			return res.status(401).json({ errors: result.array() })
+			return res.status(201).json({ errors: result.array() })
 		}
 		// 否则校验成功发送对应的用户信息
 		return res.status(200).json({
-			user: req.user,
+			username: req.user.username,
+			userId: req.user._id.toString(),
 		})
 	} catch (err) {
 		next(err);
@@ -54,8 +55,11 @@ exports.userLoginHandler = async (req, res, next) => {
 		const { username, password } = req.query;
 		// 因为 verificationCodes 模型需要用到 email， 所以根据信息先将 email 查询出来
 		let email = "";
+		// 记录要存储的 user_id
+		let userId;
 		await User.findOne({ username, password }).then(res => {
 			email = res.email;
+			userId = res._id.toString();
 		}).catch(err => {
 			throw new Error('用户登录根据用户名密码查询邮箱出错' + err.message);
 		})
@@ -66,6 +70,8 @@ exports.userLoginHandler = async (req, res, next) => {
 			msg: `${username}, 欢迎回来`,
 			token,
 			username,
+			userId,
+
 		})
 	} catch (err) {
 		next(err);
